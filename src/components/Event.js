@@ -3,9 +3,10 @@ import React from 'react'
 const Event = ({ event, dispatch }) => {
   const id = event.id
   const handleClickDeleteButton = () => {
-    dispatch({ type: 'DELETE_EVENT', id })
+    const result = window.confirm(`イベント(id=${id})を本当に削除しても良いですか？`)
+    if (result) dispatch({ type: 'DELETE_EVENT', id })
+    //上記のidはid:idを簡略化した記述方法
   }
-  //上記のidはid:idを簡略化した記述方法
 
   return (
     <tr>
