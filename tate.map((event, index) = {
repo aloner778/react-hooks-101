@@ -1,0 +1,48 @@
+[1mdiff --git a/src/components/App.js b/src/components/App.js[m
+[1mindex 7d73420..a278d6f 100644[m
+[1m--- a/src/components/App.js[m
+[1m+++ b/src/components/App.js[m
+[36m@@ -21,6 +21,15 @@[m [mconst App = () => {[m
+     setBody('')[m
+   }[m
+ [m
+[32m+[m[32m  const deleteAllEvents = e => {[m
+[32m+[m[32m    e.preventDefault() //リロードが行われないようにする[m
+[32m+[m[32m    const result = window.confirm('全てのイベントを本当に削除しても良いです')[m
+[32m+[m[32m    if (result) dispatch({ type: 'DELETE_ALL_EVENTS' })[m
+[32m+[m[32m    //ダイアログでokを選択するとresultはtrueになる[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  const unCreatable = title === '' || body ==='' //真偽値を調べる書き方[m
+[32m+[m
+   return ([m
+     <div className="container-fluid">[m
+       <h4>イベント作成フォーム</h4>[m
+[36m@@ -33,8 +42,8 @@[m [mconst App = () => {[m
+           <label htmlFor="formEventBody">内容</label>[m
+           <textarea type="text" className="form-control" id="formEventBody" value={body} onChange={e => setBody(e.target.value)}></textarea>[m
+         </div>[m
+[31m-        <button className="btn btn-primary" onClick={addEvent}>イベントを作成する</button>[m
+[31m-        <button className="btn btn-danger">全てのイベントを削除する</button>[m
+[32m+[m[32m        <button className="btn btn-primary" onClick={addEvent} disabled={unCreatable}>イベントを作成する</button>[m
+[32m+[m[32m        <button className="btn btn-danger" onClick={deleteAllEvents} disabled={state.length === 0}>全てのイベントを削除する</button>[m
+       </form>[m
+ [m
+       <h4>イベント一覧</h4>[m
+[1mdiff --git a/src/components/Event.js b/src/components/Event.js[m
+[1mindex 24e48ad..dce9621 100644[m
+[1m--- a/src/components/Event.js[m
+[1m+++ b/src/components/Event.js[m
+[36m@@ -3,9 +3,10 @@[m [mimport React from 'react'[m
+ const Event = ({ event, dispatch }) => {[m
+   const id = event.id[m
+   const handleClickDeleteButton = () => {[m
+[31m-    dispatch({ type: 'DELETE_EVENT', id })[m
+[31m-  }[m
+[32m+[m[32m    const result = window.confirm(`イベント(id=${id})を本当に削除しても良いですか？`)[m
+[32m+[m[32m    if (result) dispatch({ type: 'DELETE_EVENT', id })[m
+     //上記のidはid:idを簡略化した記述方法[m
+[32m+[m[32m  }[m
+ [m
+   return ([m
+     <tr>[m
