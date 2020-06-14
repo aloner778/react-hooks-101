@@ -1,0 +1,50 @@
+[1mdiff --git a/src/components/App.js b/src/components/App.js[m
+[1mindex 698880d..7c44e19 100644[m
+[1m--- a/src/components/App.js[m
+[1m+++ b/src/components/App.js[m
+[36m@@ -1,17 +1,24 @@[m
+ import React, { useReducer } from 'react'[m
+[32m+[m
+ import 'bootstrap/dist/css/bootstrap.min.css' //スタイルが適用される[m
+[31m-import reducer from '../reducers'[m
+[32m+[m
+ import EventForm from './EventForm'[m
+ import Events from './Events'[m
+[32m+[m[32mimport AppContext from '../contexts/AppContext'[m
+[32m+[m[32mimport reducer from '../reducers'[m
+[32m+[m
+[32m+[m[32mconsole.log({ AppContext })[m
+ [m
+ const App = () => {[m
+   const [state, dispatch] = useReducer(reducer, [])[m
+ [m
+   return ([m
+[32m+[m[32m    <AppContext.Provider value={'hello, I am a Provider.'}>[m
+       <div className="container-fluid">[m
+         <EventForm state={state} dispatch={dispatch} />[m
+         <Events state={state} dispatch={dispatch} />[m
+       </div>[m
+[32m+[m[32m    </AppContext.Provider>[m
+   )[m
+ }[m
+ [m
+[1mdiff --git a/src/components/Events.js b/src/components/Events.js[m
+[1mindex 577420e..3ae1837 100644[m
+[1m--- a/src/components/Events.js[m
+[1m+++ b/src/components/Events.js[m
+[36m@@ -1,9 +1,14 @@[m
+[31m-import React from 'react'[m
+[32m+[m[32mimport React, { useContext } from 'react'[m[41m[m
+[32m+[m[41m[m
+ import Event from './Event'[m
+[32m+[m[32mimport AppContext from '../contexts/AppContext'[m[41m[m
+ [m
+ const Events = ({ state, dispatch }) => {[m
+[32m+[m[32m  const value = useContext(AppContext)[m[41m[m
+[32m+[m[41m  [m
+   return ([m
+     <>[m
+[32m+[m[32m      <div>{value}</div>[m[41m[m
+       <h4>イベント一覧</h4>[m
+       <table className="table table-hover">[m
+         <thead>[m
