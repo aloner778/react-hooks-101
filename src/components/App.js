@@ -1,6 +1,7 @@
-import React,  { useState, useReducer } from 'react'
+import React, { useState, useReducer } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css' //スタイルが適用される
 import reducer from '../reducers'
+import Event from './Event'
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, [])
@@ -9,7 +10,7 @@ const App = () => {
 
   const addEvent = e => {
     e.preventDefault()
-    
+
     dispatch({
       type: 'CREATE_EVENT',
       title,
@@ -47,7 +48,7 @@ const App = () => {
           </tr>
         </thead>
         <tbody>
-
+          {state.map((event, index) => (<Event key={index} event={event} dispatch={dispatch} />))}
         </tbody>
       </table>
     </div>

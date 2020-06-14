@@ -7,7 +7,7 @@ const events = (state = [], action)=> {
       return [...state, { id, ...event }]
 
     case 'DELETE_EVENT':
-      return state
+      return state.filter(event => event.id !== action.id)
 
     case 'DELETE_ALL_EVENTS':
       return []
@@ -18,3 +18,5 @@ const events = (state = [], action)=> {
 }
 
 export default events
+
+//送られてきたデータが全部actionに格納されている
